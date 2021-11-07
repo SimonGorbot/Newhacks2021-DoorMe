@@ -46,8 +46,6 @@ K = np.array([[550, 0., 500],
               [0., 550, 500],
               [0., 0., 1.]])
 
-# zero distortion coefficients work well for this image
-D = np.array([0., 0., 0., 0.])
 D = np.array([0., 0., 0., 0.])
 
 # use Knew to scale the output
@@ -113,7 +111,5 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# After the loop release the cap object
 vid.release()
-# Destroy all the windows
 cv2.destroyAllWindows()
