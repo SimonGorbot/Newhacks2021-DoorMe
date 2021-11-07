@@ -99,11 +99,29 @@ while True:
     barcodes = pyzbar.decode(frame)
     if len(barcodes) > 0:
         print(barcodes[0].data.decode('utf-8'))
+        validCode = False
         for i in acceptedNames:
             if barcodes[0].data.decode('utf-8') == i:
+                validCode = True
                 sendCommand("U")
         if barcodes[0].data.decode('utf-8') == "Lock":
             sendCommand("L")
+        if validCode:
+            (x, y, w, h) = barcodes[0].rect
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            barcodeData = barcodes[0].data.decode('utf-8')
+            barcodeType = barcodes[0].type
+            text = "{} ( {} )".format(barcodeData, barcodeType)
+            cv2.putText(frame, text, (x, y - 10), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 255, 0), 2)
+        else:
+            (x, y, w, h) = barcodes[0].rect
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            barcodeData = barcodes[0].data.decode('utf-8')
+            barcodeType = barcodes[0].type
+            text = "{} ( {} )".format(barcodeData, barcodeType)
+            cv2.putText(frame, text, (x, y - 10), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
+
+
     cv2.imshow('corrected', frame)
     # the 'q' button is set as the
     # quitting button you may use any
