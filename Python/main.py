@@ -11,9 +11,9 @@ import time
 # G U I   C O D E   S T A R T ==========================================================================================
 sg.theme('Dark')
 layout = [
-    [sg.Text('Enter a folder path for the QR codes')],
+    [sg.Text('Enter a folder path for the QR codes:')],
     [sg.InputText()],
-    [sg.Text('Welcome to ____ :) Please enter your guest list below.')],
+    [sg.Text('Welcome to DoorMe. Please enter your guest list below.')],
     [sg.InputText(default_text="First Last, First Last, etc.", tooltip="First Last, First Last, etc.", expand_y=True)],
     [sg.Submit(button_text="Generate QR Codes")]
 ]
@@ -25,8 +25,9 @@ while True:
         guests = values.get(1)
         guest_list = list(map(str, guests.split(', ')))
         for name in guest_list:
+            # C:\Users\simon\Desktop\QR Codes
             img_qrcode = qrcode.make(name)
-            img_qrcode.save(name+".jpeg")
+            img_qrcode.save(name + ".jpeg")
             project_path = os.path.dirname(os.path.abspath(f"{name}.jpeg"))
             shutil.move(project_path + "\\" + name + ".jpeg", file_path + "\\" + name + ".jpeg")
         break
